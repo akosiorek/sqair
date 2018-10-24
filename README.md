@@ -19,7 +19,7 @@ Install [Tensorflow v1.6](https://www.tensorflow.org/versions/r1.6/install/),  a
 
 ## Sample Results
 
-SQAIR learns to reconstruct a sequence of imaes by detecting objects in every frame and then propagating them to the following frames. This results in unsupervised object detection & tracking, which we can see in the figure below. The figure was generated from a model trained for 1M iterations. The maximum number of objects in a frame (and therefore number of detected and propagated objects) is set to four, but there are never more than two objects. The first row shows inputs to the model (time flies from left to right), while the second row shows reconstructions with marked glimpse locations. Colors of the bounding boxes correspond to object id. Here, the color is always the same, which means that objects are properly tracked.
+SQAIR learns to reconstruct a sequence of images by detecting objects in every frame and then propagating them to the following frames. This results in unsupervised object detection & tracking, which we can see in the figure below. The figure was generated from a model trained for 1M iterations. The maximum number of objects in a frame (and therefore number of detected and propagated objects) is set to four, but there are never more than two objects. The first row shows inputs to the model (time flies from left to right), while the second row shows reconstructions with marked glimpse locations. Colors of the bounding boxes correspond to object id. Here, the color is always the same, which means that objects are properly tracked.
 
 ![SQAIR results](https://raw.githubusercontent.com/akosiorek/sqair/master/resources/sqair_mnist/000037.png)
 
@@ -27,7 +27,7 @@ SQAIR learns to reconstruct a sequence of imaes by detecting objects in every fr
 
 ![SQAIR results](https://raw.githubusercontent.com/akosiorek/sqair/master/resources/sqair_mnist/000098.png)
 
-The model here was trained on sequences of up to 10 time-steps. We have also evaluated on 100 time-step sequences, where objects' motion is much more noisy than in the training data. [Here are the results.](https://youtu.be/vIVaK6LK-qE)
+The model here was trained on sequences of up to 10 time-steps. However the model can generalise to 100 time-step sequences where the objects' motion is much more noisy than in the training data. [Here are the results.](https://youtu.be/vIVaK6LK-qE)
 
 ## Data  
 Run `./scripts/create_multi_mnist_dataset.sh`
@@ -35,7 +35,7 @@ The script creates train and validation datasets of sequences of multiple moving
 
 ## Training
 Run `./scripts/train_multi_mnist.sh`
-The training script will run for 1M iterations and will save model checkpoints every 100k iterations and training progress figures every 10k iterations in `results/multi_mnist`. Tensorflow summaries are also stored in the same folder and Tensorboard can be used for monitoring. The model is trained with a curriculum of sequences of increasing length, starting from three time-steps and increasing by one time-step every 100k iterations to the maximum of 10 time-steps. The process can take several days on a GPU.
+The training script will run for 1M iterations and will save model checkpoints every 100k iterations and training progress figures every 10k iterations in `results/multi_mnist`. Tensorflow summaries are also stored in the same folder and Tensorboard can be used for monitoring. The model is trained with a curriculum of sequences of increasing length, starting from three time-steps and increasing by one time-step every 100k iterations to the maximum of 10 time-steps. The process can take several days on a single GPU.
 
 
 ## Experimentation
@@ -48,7 +48,7 @@ SQAIR is fairly sensitive to hyperparameters controlling weight between differen
 transform_var_bias, output_scale, scale_prior, prop_prior_step_bias, output_std, disc_step_bias, prop_step_bias
 ```
 
-These  hyperparameters are documented in their corresponding config files. The last three (`output_std, disc_step_bias, prop_step_bias`) are probably the most important ones.
+These hyperparameters are documented in their corresponding config files. The last three (`output_std, disc_step_bias, prop_step_bias`) are usually the most important ones.
 
 
 ## Citation
